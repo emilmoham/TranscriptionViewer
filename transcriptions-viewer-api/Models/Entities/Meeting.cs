@@ -1,4 +1,4 @@
-using System.Buffers;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NpgsqlTypes;
@@ -12,6 +12,7 @@ namespace TranscriptionsViewerApi.Models.Entities
     public DateTimeOffset MeetingDate { get; set;}
     public string Summary { get; set;}
     
+    [JsonIgnore]
     public NpgsqlTsVector SearchVector { get; set; }
 
     public ICollection<TranscriptItem> TranscriptItems { get; set; }

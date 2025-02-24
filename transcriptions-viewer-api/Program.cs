@@ -1,5 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
+using TranscriptionsViewerApi.Repositories;
+using TranscriptionsViewerApi.Services;
 
 namespace TranscriptionsViewerApi;
 
@@ -16,6 +18,12 @@ public class Program
         // SQL
         string? connectionString = builder.Configuration.GetConnectionString("transcriptionsdb");
         builder.Services.AddDbContext<ApplicationContext>(x => x.UseNpgsql(connectionString));
+
+        // Add Repositories
+        builder.Services.AddScoped<ITranscriptionsRepository, TranscriptionsRepository>();
+
+        // Add Services
+        builder.Services.AddScoped<TranscriptionsService>();
 
         var app = builder.Build();
 
