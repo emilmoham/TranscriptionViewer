@@ -11,8 +11,12 @@ namespace TranscriptionsViewerApi
     public ApplicationContext() {}
     public ApplicationContext(DbContextOptions<ApplicationContext> options ) : base( options ) {}
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) {
-
+    protected override void OnModelCreating(ModelBuilder modelBuilder) 
+    {
+      new MeetingConfiguration()
+        .Configure(modelBuilder.Entity<Meeting>());
+      new TranscriptItemConfiguration()
+        .Configure(modelBuilder.Entity<TranscriptItem>());
     }
   }
 }
