@@ -14,6 +14,14 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
+
+        // Configure CORS
+        builder.Services.AddCors(p => p.AddDefaultPolicy(builder => {
+            builder
+                .AllowAnyOrigin() // TODO: lock this down once we're closer to beta
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        }));
         
         // SQL
         string? connectionString = builder.Configuration.GetConnectionString("transcriptionsdb");
@@ -34,6 +42,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseCors();
         app.MapControllers();
         app.Run();
     }
