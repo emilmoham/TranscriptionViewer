@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranscriptionsViewerApi", "TranscriptionsViewerApi\TranscriptionsViewerApi.csproj", "{DA93DEA0-4F90-3A98-D298-DBC5D3CDBECF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transcriptions-viewer-api", "transcriptions-viewer-api\transcriptions-viewer-api.csproj", "{DA93DEA0-4F90-3A98-D298-DBC5D3CDBECF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
