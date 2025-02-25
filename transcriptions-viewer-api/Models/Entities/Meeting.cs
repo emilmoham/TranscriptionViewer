@@ -10,7 +10,8 @@ namespace TranscriptionsViewerApi.Models.Entities
     public int Id { get; set; }
     public string Title { get; set; }
     public DateTimeOffset MeetingDate { get; set;}
-    public string AudioUrl { get; set; }
+    public string RecordingKey { get; set; }
+    public string CaptionsKey { get; set; }
     public string Summary { get; set;}
     
     [JsonIgnore]
@@ -28,10 +29,7 @@ namespace TranscriptionsViewerApi.Models.Entities
 
       builder.Property(e => e.Title)
         .HasMaxLength(254);
-
-      builder.Property(e => e.AudioUrl)
-        .HasMaxLength(254);
-
+        
       builder.Property(e => e.Summary)
         .HasMaxLength(2048);
 

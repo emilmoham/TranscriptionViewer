@@ -26,5 +26,13 @@ namespace TranscriptionsViewerApi.Controllers
       IEnumerable<Meeting> meetings = await _trancriptionsService.GetMeetings();
       return Ok(meetings);
     }
+
+    [HttpGet("Meeting/{id}")]
+    public async Task<IActionResult> GetMeeting(int id) {
+      Meeting? meeting = await _trancriptionsService.GetMeetingById(id);
+      if (meeting == null)
+        return NotFound();
+      return Ok(meeting);
+    }
   }
 }

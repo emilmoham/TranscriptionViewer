@@ -16,5 +16,9 @@ namespace TranscriptionsViewerApi.Services
     public async Task<IEnumerable<Meeting>> GetMeetings() {
       return await _transcriptionsRepository.GetMeetings();
     }
+
+    public async Task<Meeting?> GetMeetingById(int id) {
+      return await _transcriptionsRepository.GetMeeting(id);
+    }
   }
 }

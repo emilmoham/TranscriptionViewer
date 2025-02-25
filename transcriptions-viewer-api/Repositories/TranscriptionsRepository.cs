@@ -4,6 +4,8 @@ using TranscriptionsViewerApi.Models.Entities;
 namespace TranscriptionsViewerApi.Repositories 
 {
   public interface ITranscriptionsRepository {
+    Task<Meeting?> GetMeeting(int id);
+
     Task<IEnumerable<Meeting>> GetMeetings(
       DateTimeOffset? rangeStart = null,
       DateTimeOffset? rangeEnd = null,
@@ -17,6 +19,10 @@ namespace TranscriptionsViewerApi.Repositories
     public TranscriptionsRepository(ApplicationContext applicationContext)
     {
       _applicationContext = applicationContext;
+    }
+
+    public async Task<Meeting?> GetMeeting(int id) {
+      return await _applicationContext.Meetings.FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task<IEnumerable<Meeting>> GetMeetings(
