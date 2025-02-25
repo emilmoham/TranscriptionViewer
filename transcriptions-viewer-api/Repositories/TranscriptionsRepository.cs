@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TranscriptionsViewerApi.Models.DTOs;
 using TranscriptionsViewerApi.Models.Entities;
 
 namespace TranscriptionsViewerApi.Repositories 
@@ -10,6 +11,8 @@ namespace TranscriptionsViewerApi.Repositories
       DateTimeOffset? rangeStart = null,
       DateTimeOffset? rangeEnd = null,
       int limit = 10);
+
+    Task<IEnumerable<RankedMeeting>> QueryMeetings(string searchTerm);
   }
 
   public class TranscriptionsRepository : ITranscriptionsRepository 
@@ -45,6 +48,28 @@ namespace TranscriptionsViewerApi.Repositories
           && e.MeetingDate < rangeEnd)
         .Take(limit)
         .ToListAsync();
+    }
+
+    public async Task<IEnumerable<RankedMeeting>> QueryMeetings(string searchTerm) 
+    {
+      var query = EF.Functions.PhraseToTsQuery(searchTerm);
+
+      return await _applicationContext.TranscriptItems
+        .Include(e => e.Meeting)
+        .Where(e => 
+          e.SearchVector.Matches(query)
+          || e.Meeting.SearchVector.Matches(query)
+        ).GroupBy(e => e.Meeting)
+        .Select(m => new RankedMeeting {
+          Id = m.Key.Id,
+          Title = m.Key.Title,
+          MeetingDate = m.Key.MeetingDate,
+          RecordingKey = m.Key.RecordingKey,
+          CaptionsKey = m.Key.CaptionsKey,
+          Summary = m.Key.Summary,
+          TranscriptItems = m.ToList(),
+          Rank = m.Key.SearchVector.Rank(EF.Functions.PhraseToTsQuery(searchTerm)) // TODO include rank from individual meeting lines
+        }).ToListAsync();
     }
   }
 }
