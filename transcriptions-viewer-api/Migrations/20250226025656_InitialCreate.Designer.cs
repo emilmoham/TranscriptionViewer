@@ -10,11 +10,11 @@ using TranscriptionsViewerApi;
 
 #nullable disable
 
-namespace TranscriptionsViewerApi.Migrations
+namespace transcriptionsviewerapi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250225205716_AddRecordingAndCaptionKeyFields")]
-    partial class AddRecordingAndCaptionKeyFields
+    [Migration("20250226025656_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,8 +54,7 @@ namespace TranscriptionsViewerApi.Migrations
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()

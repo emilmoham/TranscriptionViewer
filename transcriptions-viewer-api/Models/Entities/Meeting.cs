@@ -29,9 +29,6 @@ namespace TranscriptionsViewerApi.Models.Entities
 
       builder.Property(e => e.Title)
         .HasMaxLength(254);
-        
-      builder.Property(e => e.Summary)
-        .HasMaxLength(2048);
 
        builder.HasGeneratedTsVectorColumn(
           e => e.SearchVector,

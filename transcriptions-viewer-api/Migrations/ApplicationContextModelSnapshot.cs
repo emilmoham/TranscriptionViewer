@@ -9,7 +9,7 @@ using TranscriptionsViewerApi;
 
 #nullable disable
 
-namespace TranscriptionsViewerApi.Migrations
+namespace transcriptionsviewerapi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
@@ -51,8 +51,7 @@ namespace TranscriptionsViewerApi.Migrations
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()

@@ -5,6 +5,11 @@ using TranscriptionsViewerApi.Models.Entities;
 namespace TranscriptionsViewerApi.Repositories 
 {
   public interface ITranscriptionsRepository {
+    
+    void AddMeeting(Meeting meeting);
+
+    void AddMeetings(IEnumerable<Meeting> meetings);
+    
     Task<Meeting?> GetMeeting(int id);
 
     Task<IEnumerable<Meeting>> GetMeetings(
@@ -13,6 +18,8 @@ namespace TranscriptionsViewerApi.Repositories
       int limit = 10);
 
     Task<IEnumerable<RankedMeeting>> QueryMeetings(string searchTerm);
+
+    Task<int> SaveChangesAsync();
   }
 
   public class TranscriptionsRepository : ITranscriptionsRepository 
@@ -22,6 +29,16 @@ namespace TranscriptionsViewerApi.Repositories
     public TranscriptionsRepository(ApplicationContext applicationContext)
     {
       _applicationContext = applicationContext;
+    }
+
+    public void AddMeeting(Meeting meeting) 
+    {
+      _applicationContext.Meetings.Add(meeting);
+    }
+
+    public void AddMeetings(IEnumerable<Meeting> meetings)
+    {
+      _applicationContext.Meetings.AddRange(meetings);
     }
 
     public async Task<Meeting?> GetMeeting(int id) {
@@ -70,6 +87,10 @@ namespace TranscriptionsViewerApi.Repositories
           TranscriptItems = m.ToList(),
           Rank = m.Key.SearchVector.Rank(EF.Functions.PhraseToTsQuery(searchTerm)) // TODO include rank from individual meeting lines
         }).ToListAsync();
+    }
+
+    public async Task<int> SaveChangesAsync() {
+      return await _applicationContext.SaveChangesAsync();
     }
   }
 }

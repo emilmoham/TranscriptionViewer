@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using TranscriptionsViewerApi.Repositories;
+using TranscriptionsViewerApi.Seeders;
 using TranscriptionsViewerApi.Services;
 
 namespace TranscriptionsViewerApi;
@@ -33,7 +34,29 @@ public class Program
         // Add Services
         builder.Services.AddScoped<TranscriptionsService>();
 
+        
+
         var app = builder.Build();
+
+
+        if (args.Contains("--seed") || args.Contains("-s")) {
+          Console.WriteLine("Running seeders...");
+
+          // Ensure migrations are run
+          using (var scope = app.Services.CreateScope())
+          {
+            ApplicationContext context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+            context.Database.Migrate();
+          
+          
+            // Add test data
+            ITranscriptionsRepository transcriptionsRepository = scope.ServiceProvider.GetRequiredService<ITranscriptionsRepository>();
+            MeetingSeeder meetingSeeder = new MeetingSeeder(transcriptionsRepository);
+            meetingSeeder.SeedAsync().Wait();
+          }
+
+          return;
+        }
 
         if (app.Environment.IsDevelopment())
         {

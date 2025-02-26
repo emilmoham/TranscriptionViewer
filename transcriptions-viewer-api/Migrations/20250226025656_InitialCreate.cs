@@ -5,7 +5,7 @@ using NpgsqlTypes;
 
 #nullable disable
 
-namespace TranscriptionsViewerApi.Migrations
+namespace transcriptionsviewerapi.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -21,7 +21,9 @@ namespace TranscriptionsViewerApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "character varying(254)", maxLength: 254, nullable: false),
                     MeetingDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    Summary = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: false),
+                    RecordingKey = table.Column<string>(type: "text", nullable: false),
+                    CaptionsKey = table.Column<string>(type: "text", nullable: false),
+                    Summary = table.Column<string>(type: "text", nullable: false),
                     SearchVector = table.Column<NpgsqlTsVector>(type: "tsvector", nullable: false)
                         .Annotation("Npgsql:TsVectorConfig", "english")
                         .Annotation("Npgsql:TsVectorProperties", new[] { "Title", "Summary" })
