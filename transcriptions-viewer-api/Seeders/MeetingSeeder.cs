@@ -21,7 +21,7 @@ namespace TranscriptionsViewerApi.Seeders
         .RuleFor(m => m.MeetingDate, f => f.Date.PastOffset().UtcDateTime)
         .RuleFor(m => m.RecordingKey, f => f.System.FilePath())
         .RuleFor(m => m.CaptionsKey, f => f.System.FilePath())
-        .RuleFor(m => m.Summary, f => f.WaffleMarkdown(1, true));
+        .RuleFor(m => m.Summary, f => f.WaffleMarkdown(1, false));
 
       List<Meeting> testData = meetingFaker.Generate(100);
       
