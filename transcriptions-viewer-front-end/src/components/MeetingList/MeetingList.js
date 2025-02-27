@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react';
 import MeetingCard from '../MeetingCard/MeetingCard';
 
+import styles from './MeetingList.module.css';
+
 export default function MeetingList() {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(true);
@@ -24,8 +26,10 @@ export default function MeetingList() {
   }
 
   return (
-    data.map((m) => {
-      return (<MeetingCard key={m.id} meetingData={m} />)
-    })
+    <div className={styles.MeetingList}>
+      {data.map((m) => {
+        return (<MeetingCard key={m.id} meetingData={m} />)
+      })}
+    </div>
   );
 }

@@ -21,8 +21,8 @@ export default function MeetingCard(props) {
 
   return (
     <div className={styles.MeetingCard}>
-      <h3><Link href={`/meeting/${id}`}>{title}</Link></h3>
-      <h5>{date}</h5>
+      <h1><Link href={`/meeting/${id}`}>{title}</Link></h1>
+      <h3>{date}</h3>
       <Markdown>{summary}</Markdown>
     </div>
   );

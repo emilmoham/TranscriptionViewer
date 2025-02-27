@@ -1,9 +1,26 @@
-.MeetingCard h3 {
+.MeetingCard {
+  background-color: var(--background-secondary);
+  margin: var(--margin);
+  padding: var(--padding);
+  border-radius: var(--radius);
+  box-shadow: 1px 1px var(--background-tertiary);
+
+  max-width: 1000px;
+}
+
+.MeetingCard h1 {
   margin: 0;
 }
 
-.MeetingCard h5 {
+.MeetingCard h1 a {
+  color: var(--foreground-secondary);
+  text-decoration: none;
+}
+
+
+.MeetingCard h3 {
   margin: 0;
+  color: var(--foreground-tertiary)
 }
 
 .MeetingCard p {
@@ -13,4 +30,8 @@
 
 
 .MeetingCard ol li {
+}
+
+.Summary {
+
 }
