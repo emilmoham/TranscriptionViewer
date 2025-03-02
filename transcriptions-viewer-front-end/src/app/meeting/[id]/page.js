@@ -2,6 +2,7 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { Player } from "webvtt-player"
+import styles from "./meeting.module.css"
 
 export default function Meeting(props) {
   const params = useParams();
@@ -23,12 +24,14 @@ export default function Meeting(props) {
   if (!meeting) return <div>Loading...</div>
 
   return (
-    <div>
-      <h3>{meeting.title}</h3>
+    <main>
+      <div className={styles.MeetingTitle}>
+        <h1>{meeting.title}</h1>
+      </div>
       <Player 
         audio={`${cdnBase}/${meeting.recordingKey}`} 
         transcript={`${cdnBase}/${meeting.captionsKey}`} 
       />
-    </div>
+    </main>
   );
 } 

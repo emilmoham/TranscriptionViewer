@@ -1,11 +1,11 @@
 .MeetingCard {
   background-color: var(--background-secondary);
-  margin: var(--margin);
+  margin: var(--margin) 0;
   padding: var(--padding);
   border-radius: var(--radius);
   box-shadow: 1px 1px var(--background-tertiary);
 
-  max-width: 1000px;
+  width: calc(100% - 2 * var(--padding));
 }
 
 .MeetingCard h1 {

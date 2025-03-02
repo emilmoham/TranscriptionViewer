@@ -17,10 +17,6 @@ export default function MeetingList() {
     });
   }, [])
 
-  useEffect(() => {
-    console.log(data);
-  }, [data])
-
   if (isLoading) {
     return (<div>Loading</div>);
   }

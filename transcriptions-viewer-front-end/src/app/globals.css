@@ -18,8 +18,8 @@
     --background-secondary: #313D5A;
     --background-tertiary: #525072;
     --foreground-primary: #EAEAEA;
-    --foreground-secondary: #CBC5EA;
-    --foreground-tertiary: #73628A;
+    --foreground-secondary: #ff8f00;
+    --foreground-tertiary: #F5BD75;
   }
 }
 
@@ -36,6 +36,13 @@ body {
   background: var(--background-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  padding: 0px var(--padding);
+  width: calc(100% - 2 *var(--padding));
+  max-width: calc(1000px - 2 * var(--padding));
+  margin: 0px auto;
 }
 
 @media (prefers-color-scheme: dark) {
