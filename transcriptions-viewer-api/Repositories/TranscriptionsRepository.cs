@@ -50,19 +50,21 @@ namespace TranscriptionsViewerApi.Repositories
       DateTimeOffset? rangeEnd = null,
       int limit = 10) 
     {
-      if (rangeStart == null)
+      IQueryable<Meeting> meetings = _applicationContext.Meetings.AsQueryable();
+
+      if (rangeStart != null)
       {
-        rangeStart = DateTimeOffset.UtcNow.AddMonths(-1);
+        meetings = meetings.Where(e => e.MeetingDate >= rangeStart);
       }
 
-      if (rangeEnd == null) 
+      if (rangeEnd != null) 
       {
-        rangeEnd = DateTimeOffset.UtcNow;
+        meetings = meetings.Where(e => e.MeetingDate <= rangeEnd);
       }
 
       return await _applicationContext.Meetings
-        .Where(e => e.MeetingDate > rangeStart 
-          && e.MeetingDate < rangeEnd)
+        .OrderBy(e => e.MeetingDate)
+        .Reverse()
         .Take(limit)
         .ToListAsync();
     }
