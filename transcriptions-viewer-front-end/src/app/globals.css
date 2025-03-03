@@ -50,3 +50,56 @@ main {
     color-scheme: dark;
   }
 }
+
+.webvtt-player .media {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.webvtt-player .media .player {
+  order: 1;
+}
+
+.webvtt-player .media div  {
+  order: 2;
+}
+
+.webvtt-player .media div div span {
+  display: none;
+}
+
+
+.webvtt-player .media div div input {
+  width: calc(100% - 2 * var(--padding));
+  padding: var(--padding);
+  border-radius: var(--radius);
+  margin: var(--margin) 0;
+}
+
+.webvtt-player .media .transcript {
+  order: 3;
+  overflow-y: auto;
+}
+
+.webvtt-player .media .transcript .line {
+  display: flex;
+  padding: var(--padding);
+}
+
+.webvtt-player .media .transcript .active.line {
+  background-color: var(--background-secondary);
+} 
+
+.webvtt-player .media .transcript .match.line {
+  background-color: #F5BD75;
+  color: black;
+} 
+
+.webvtt-player .media .transcript .line .time {
+  width: 8em;
+}
+
+.webvtt-player .media .transcript .line .text {
+  flex-shrink: 10000000; /* ?? Surely there's a better way of doing this */
+}
