@@ -1,3 +1,4 @@
+using TranscriptionsViewerApi.Models.DTOs;
 using TranscriptionsViewerApi.Models.Entities;
 using TranscriptionsViewerApi.Repositories;
 
@@ -19,6 +20,10 @@ namespace TranscriptionsViewerApi.Services
 
     public async Task<Meeting?> GetMeetingById(int id) {
       return await _transcriptionsRepository.GetMeeting(id);
+    }
+
+    public async Task<IEnumerable<RankedMeeting>> QueryMeetings(string query) {
+      return await _transcriptionsRepository.QueryMeetings(query);
     }
   }
 }

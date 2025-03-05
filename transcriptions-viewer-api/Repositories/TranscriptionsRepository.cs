@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 using TranscriptionsViewerApi.Models.DTOs;
 using TranscriptionsViewerApi.Models.Entities;
 
@@ -71,23 +72,36 @@ namespace TranscriptionsViewerApi.Repositories
 
     public async Task<IEnumerable<RankedMeeting>> QueryMeetings(string searchTerm) 
     {
-      var query = EF.Functions.PhraseToTsQuery(searchTerm);
-
-      return await _applicationContext.TranscriptItems
-        .Include(e => e.Meeting)
+      return await _applicationContext.Meetings
+        .Include(e => e.TranscriptItems)
         .Where(e => 
-          e.SearchVector.Matches(query)
-          || e.Meeting.SearchVector.Matches(query)
-        ).GroupBy(e => e.Meeting)
-        .Select(m => new RankedMeeting {
-          Id = m.Key.Id,
-          Title = m.Key.Title,
-          MeetingDate = m.Key.MeetingDate,
-          RecordingKey = m.Key.RecordingKey,
-          CaptionsKey = m.Key.CaptionsKey,
-          Summary = m.Key.Summary,
-          TranscriptItems = m.ToList(),
-          Rank = m.Key.SearchVector.Rank(EF.Functions.PhraseToTsQuery(searchTerm)) // TODO include rank from individual meeting lines
+            e.TitleSearchVector
+              .Concat(e.SummarySearchVector)
+              .Matches(EF.Functions.WebSearchToTsQuery(searchTerm))
+          ||e.Id == _applicationContext.TranscriptItems
+              .Where(t => t.SearchVector.Matches(EF.Functions.WebSearchToTsQuery(searchTerm)))
+              .Select(t => t.MeetingId)
+              .FirstOrDefault())
+        .Select(e => new RankedMeeting {
+          Id = e.Id,
+          Title = e.Title,
+          MeetingDate = e.MeetingDate,
+          RecordingKey = e.RecordingKey,
+          CaptionsKey = e.CaptionsKey,
+          Summary = e.Summary,
+          Rank = e.TitleSearchVector
+            .Concat(e.SummarySearchVector)
+            .Rank(EF.Functions.WebSearchToTsQuery(searchTerm)),
+          TranscriptItems = e.TranscriptItems
+            .Where(t => t.SearchVector.Matches(EF.Functions.WebSearchToTsQuery(searchTerm)))
+            .Select(t => new RankedTranscriptItem {
+              Id = t.Id,
+              MeetingId = t.MeetingId,
+              TimestampStart = t.TimestampStart,
+              TimestampEnd = t.TimestampEnd,
+              Text = t.Text,
+              Rank = t.SearchVector.Rank(EF.Functions.WebSearchToTsQuery(searchTerm))
+            }).AsEnumerable()
         }).ToListAsync();
     }
 

@@ -15,7 +15,9 @@ namespace TranscriptionsViewerApi.Models.Entities
     public string Summary { get; set;}
     
     [JsonIgnore]
-    public NpgsqlTsVector SearchVector { get; set; }
+    public NpgsqlTsVector TitleSearchVector { get; set; }
+    [JsonIgnore]
+    public NpgsqlTsVector SummarySearchVector { get; set; }
 
     public ICollection<TranscriptItem> TranscriptItems { get; set; }
   }
@@ -31,10 +33,17 @@ namespace TranscriptionsViewerApi.Models.Entities
         .HasMaxLength(254);
 
        builder.HasGeneratedTsVectorColumn(
-          e => e.SearchVector,
+          e => e.TitleSearchVector,
           "english",
-          e => new { e.Title, e.Summary })
-          .HasIndex(e => e.SearchVector)
+          e => e.Title)
+          .HasIndex(e => e.TitleSearchVector)
+          .HasMethod("GIN");
+
+        builder.HasGeneratedTsVectorColumn(
+          e => e.SummarySearchVector,
+          "english",
+          e => e.Summary)
+          .HasIndex(e => e.SummarySearchVector)
           .HasMethod("GIN");
        
        builder.HasMany(e => e.TranscriptItems)

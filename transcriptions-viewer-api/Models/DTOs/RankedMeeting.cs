@@ -1,5 +1,3 @@
-using TranscriptionsViewerApi.Models.Entities;
-
 namespace TranscriptionsViewerApi.Models.DTOs 
 {
   public class RankedMeeting {
@@ -11,6 +9,6 @@ namespace TranscriptionsViewerApi.Models.DTOs
     public string Summary { get; set;}
     public float Rank { get; set; }
 
-    public ICollection<TranscriptItem> TranscriptItems { get; set; }
+    public IEnumerable<RankedTranscriptItem> TranscriptItems { get; set; }
   }
 }

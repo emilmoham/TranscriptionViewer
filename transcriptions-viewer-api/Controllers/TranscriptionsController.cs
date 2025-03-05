@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TranscriptionsViewerApi.Models.DTOs;
 using TranscriptionsViewerApi.Models.Entities;
 using TranscriptionsViewerApi.Services;
 
@@ -24,6 +25,12 @@ namespace TranscriptionsViewerApi.Controllers
     public async Task<IActionResult> GetMeetings() 
     {
       IEnumerable<Meeting> meetings = await _trancriptionsService.GetMeetings();
+      return Ok(meetings);
+    }
+
+    [HttpPost("Meetings")]
+    public async Task<IActionResult> QueryMeetings(string query) {
+      IEnumerable<RankedMeeting> meetings = await _trancriptionsService.QueryMeetings(query);
       return Ok(meetings);
     }
 
