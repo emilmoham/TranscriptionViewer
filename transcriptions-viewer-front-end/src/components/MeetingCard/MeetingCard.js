@@ -16,7 +16,6 @@ export default function MeetingCard(props) {
   } = meetingData;
 
   let date = new Date(meetingDate);
-  console.log(date);
   date = moment(date).format('MMMM D, YYYY');
 
   return (
