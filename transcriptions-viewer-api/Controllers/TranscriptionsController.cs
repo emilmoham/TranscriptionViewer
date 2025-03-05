@@ -28,7 +28,7 @@ namespace TranscriptionsViewerApi.Controllers
       return Ok(meetings);
     }
 
-    [HttpPost("Meetings")]
+    [HttpGet("Meetings/Search")]
     public async Task<IActionResult> QueryMeetings(string query) {
       IEnumerable<RankedMeeting> meetings = await _trancriptionsService.QueryMeetings(query);
       return Ok(meetings);
