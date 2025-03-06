@@ -1,18 +1,9 @@
-'use client';
-import { useState, useEffect } from 'react';
 import MeetingCard from '../MeetingCard/MeetingCard';
 
 import styles from './MeetingList.module.css';
 
 export default function MeetingList(props) {
-  const {
-    isLoading,
-    data
-  } = props;
-
-  if (isLoading) {
-    return (<div>Loading</div>);
-  }
+  const { data } = props;
 
   return (
     <div className={styles.MeetingList}>
