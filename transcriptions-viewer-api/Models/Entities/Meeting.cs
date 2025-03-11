@@ -19,7 +19,7 @@ namespace TranscriptionsViewerApi.Models.Entities
     [JsonIgnore]
     public NpgsqlTsVector SummarySearchVector { get; set; }
 
-    public ICollection<TranscriptItem> TranscriptItems { get; set; }
+    public IEnumerable<TranscriptItem> TranscriptItems { get; set; }
   }
 
   public class MeetingConfiguration : IEntityTypeConfiguration<Meeting> 

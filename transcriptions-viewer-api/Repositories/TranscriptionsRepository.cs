@@ -43,7 +43,14 @@ namespace TranscriptionsViewerApi.Repositories
     }
 
     public async Task<Meeting?> GetMeeting(int id) {
-      return await _applicationContext.Meetings.FirstOrDefaultAsync(e => e.Id == id);
+      Meeting? meeting = await _applicationContext.Meetings
+        .Include(e => e.TranscriptItems)
+        .FirstOrDefaultAsync(e => e.Id == id);
+      
+      if (meeting != null)
+        meeting.TranscriptItems = meeting.TranscriptItems.OrderBy(e => e.TimestampStart);
+
+      return meeting;
     }
 
     public async Task<IEnumerable<Meeting>> GetMeetings(

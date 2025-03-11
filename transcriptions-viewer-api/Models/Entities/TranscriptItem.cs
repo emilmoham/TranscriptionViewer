@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NpgsqlTypes;
@@ -11,9 +12,11 @@ namespace TranscriptionsViewerApi.Models.Entities
     public int TimestampStart { get; set; }
     public int TimestampEnd { get; set; }
     public string Text { get; set; }
-
+    
+    [JsonIgnore]
     public NpgsqlTsVector SearchVector { get; set; }
 
+    [JsonIgnore]
     public Meeting Meeting { get; set; }
   }
 
