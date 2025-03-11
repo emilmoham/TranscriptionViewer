@@ -1,12 +1,13 @@
 export default function TranscriptItem(props) {
   const {
-    item
+    item,
+    onClickItem,
   } = props;
 
   const {
     meetingId,
     timestampStart,
-    text
+    text,
   } = item;
 
   const convertTimestampToString = (duration) => {
@@ -28,7 +29,7 @@ export default function TranscriptItem(props) {
 
   return (
     <div>
-      <div>{convertTimestampToString(timestampStart)}</div>
+      <div onClick={() => onClickItem(timestampStart)}>{convertTimestampToString(timestampStart)}</div>
       <div>{text}</div>
     </div>
   )

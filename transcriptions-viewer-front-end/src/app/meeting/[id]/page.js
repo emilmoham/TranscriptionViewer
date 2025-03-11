@@ -1,13 +1,17 @@
 'use client';
 import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react';
-import { Player } from "webvtt-player"
+import { useCallback, useEffect, useRef, useState } from 'react';
+//import { Player } from "webvtt-player"
+import { AudioPlayer } from 'react-audio-play';
+import Transcript from '@/components/Transcript/Transcript';
 import styles from "./meeting.module.css"
 
 export default function Meeting(props) {
   const params = useParams();
 
   const [meeting, setMeeting] = useState(null);
+
+  const audioRef = useRef(null);
 
   const apiBase = "http://localhost:5065"; // TODO: change this url base to env value
   const cdnBase = "http://localhost:19002"; // TODO: change this url base to env value
@@ -21,6 +25,13 @@ export default function Meeting(props) {
     fetchMeeting(params.id);
   }, [])
 
+  const seek = useCallback((timestamp) => {
+    if (audioRef.current) {
+      console.log(timestamp);
+      console.log(audioRef.current);
+    }
+  }, [audioRef])
+
   if (!meeting) return <div>Loading...</div>
 
   return (
@@ -28,9 +39,18 @@ export default function Meeting(props) {
       <div className={styles.MeetingTitle}>
         <h1>{meeting.title}</h1>
       </div>
-      <Player 
+      {/* <Player 
         audio={`${cdnBase}/${meeting.recordingKey}`} 
         transcript={`${cdnBase}/${meeting.captionsKey}`} 
+      /> */}
+      <AudioPlayer 
+        ref={audioRef}
+        width={"100%"}
+        src={`${cdnBase}/${meeting.recordingKey}`}
+      />
+      <Transcript
+        lines={meeting.transcriptItems}
+        onClickLine={(timestamp) => seek(timestamp)}
       />
     </main>
   );
