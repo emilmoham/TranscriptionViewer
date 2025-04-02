@@ -71,10 +71,11 @@ main {
 
 
 .webvtt-player .media div div input {
-  width: calc(100% - 2 * var(--padding));
+  display: none;
+  /* width: calc(100% - 2 * var(--padding));
   padding: var(--padding);
   border-radius: var(--radius);
-  margin: var(--margin) 0;
+  margin: var(--margin) 0; */
 }
 
 .webvtt-player .media .transcript {

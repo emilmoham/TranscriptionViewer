@@ -1,9 +1,7 @@
 'use client';
 import { useParams } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react';
-//import { Player } from "webvtt-player"
-import { AudioPlayer } from 'react-audio-play';
-import Transcript from '@/components/Transcript/Transcript';
+import { Player } from "webvtt-player"
 import styles from "./meeting.module.css"
 
 export default function Meeting(props) {
@@ -39,18 +37,9 @@ export default function Meeting(props) {
       <div className={styles.MeetingTitle}>
         <h1>{meeting.title}</h1>
       </div>
-      {/* <Player 
-        audio={`${cdnBase}/${meeting.recordingKey}`} 
-        transcript={`${cdnBase}/${meeting.captionsKey}`} 
-      /> */}
-      <AudioPlayer 
-        ref={audioRef}
-        width={"100%"}
-        src={`${cdnBase}/${meeting.recordingKey}`}
-      />
-      <Transcript
-        lines={meeting.transcriptItems}
-        onClickLine={(timestamp) => seek(timestamp)}
+      <Player 
+        audio={`${cdnBase}/${meeting.recordingKey}`}
+        transcript={`${cdnBase}/${meeting.captionsKey}`}
       />
     </main>
   );
